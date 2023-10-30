@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        line-height: 0;
+      }
+      body {
+        background-color: #ccc;
+        text-align: center;
+      }
+      .gallery {
+        width: 600px;
+        margin: 10px auto;
+        border: 5px solid white;
+      }
+      .gallery-card {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .thumb {
+        box-sizing: border-box;
+        width: 200px;
+        border: 5px solid white;
+      }
+      .thumb:hover {
+        opacity: 0.5;
+        cursor: pointer;
+      }
+      @keyframes fadeIN {
+        to {
+          opacity: 1;
+        }
+      }
+
+      .fade {
+        opacity: 0;
+        animation: fadeIN 0.5s;
+      }
+      .active {
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="gallery">
+      <img src="/img/card (1).jpg" class="jumbo" />
+      <div class="gallery-card">
+        <img src="/img/card (1).jpg" class="thumb" alt="" />
+        <img src="/img/card (2).jpg" class="thumb" alt="" />
+        <img src="/img/card (3).jpg" class="thumb" alt="" />
+        <img src="/img/card (4).jpg" class="thumb" alt="" />
+        <img src="/img/card (5).jpg" class="thumb" alt="" />
+        <img src="/img/card (6).jpg" class="thumb" alt="" />
+      </div>
+    </div>
+    <script>
+      const container = document.querySelector(".gallery");
+      const jumbo = document.querySelector(".jumbo");
+      const menu = document.querySelectorAll(".thumb");
+
+      function click() {
+        container.addEventListener("click", function (e) {
+          if (e.target.className == "thumb") {
+            jumbo.src = e.target.src;
+            jumbo.classList.add("fade");
+            setTimeout(function () {
+              jumbo.classList.remove("fade");
+            }, 200);
+
+            menu.forEach(function (yt) {
+              yt.className = "thumb";
+            });
+            e.target.classList.add("active");
+            setTimeout(function () {
+              menu.classList.remove("active");
+            }, 4000);
+          }
+        });
+      }
+      function change() {
+        let currentImageIndex = 0;
+        // let currentImageIndex = 0;
+
+        // function changeImage(a) {
+        //   jumbo.src = a;
+        // }
+
+        // function autoChangeImage() {
+        //   changeImage(menu[currentImageIndex].src);
+        //   currentImageIndex = (currentImageIndex + 1) % menu.length;
+        // }
+
+        function autoChangeImage() {
+          jumbo.src = menu[currentImageIndex].src;
+          currentImageIndex = (currentImageIndex + 1) % menu.length;
+        }
+        setInterval(autoChangeImage, 10000);
+      }
+      click();
+      change();
+    </script>
+  </body>
+</html>
